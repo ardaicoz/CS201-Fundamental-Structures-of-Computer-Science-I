@@ -15,6 +15,7 @@ Two alternative algorithms that solve this problem are given below in lay terms.
   
 Homework 3:  
 In this homework, you will implement a library system by using linked lists. The library system stores information about students and books. The students will be able to check out books from the library and will be able to return them to the library. For each student, the system stores an id, name, and a list of books that she/he checked out. Each book is represented by its id, title, and year.  
+**Second part of this homework doesn't work as it was intended to do, so I advice you too be careful when using this part.**
   
 Homework 4:  
 In this homework, you will work on an extended version of the HPAir problem that we studied in the class, which is also explained in Section 6.4 in your text book (Carrano's book, 6'th edition). In this assignment, we will provide you with a directed fight graph that shows the connections between cities. A connection between two cities consists of a "flight id" and a "cost". By using this flight graph, your program must find all possible paths (sequences of flights) between the given departure and destination cities. It also should find the least cost path among all paths.  
