@@ -5,7 +5,7 @@ int main() {
     BankingSystem B;
     B. addBranch ( 1451 , " Bilkent " );
     B. addBranch ( 2435 , " Kizilay " );
-    //B. addBranch ( 1672 , " Bahcelievler " );
+    B. addBranch ( 1672 , " Bahcelievler " );
     B. addBranch ( 3216 , " Ulus " );
     B. addBranch ( 2435 , " Kizilay " );
     B. deleteBranch ( 1672 );
@@ -39,11 +39,14 @@ int main() {
 
     cout << endl;
     B. showAllAccounts ();
-
-    cout << endl;
-    B.showBranch(1451);
-    B.showBranch(1672);
-    B.showBranch(9876);
+    B. showBranch ( 1451 );
+    B. showBranch ( 1672 );
+    B. showBranch ( 9876 );
+    B. showCustomer ( 1234 );
+    B. showCustomer ( 4567 );
+    B. showCustomer ( 1212 );
+    B. deleteBranch ( 1451 );
+    B. showCustomer ( 4567 );
 
     return 0;
 }

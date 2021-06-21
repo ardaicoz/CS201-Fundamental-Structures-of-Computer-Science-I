@@ -407,7 +407,50 @@ void BankingSystem::showBranch(const int branchId) {
 }
 
 void BankingSystem::showCustomer(const int customerId) {
-    
+    //check if this customer exits
+    bool isCustomer = false;
+    for (int i = 0; i < customerNum; i++) {
+        if (customerList[i].getId() == customerId) {
+            isCustomer = true;
+        }
+    }
+
+    if (!isCustomer) {
+        cout << "Customer " << customerId << " does not exist" << endl; 
+    }
+    else {
+        int accounts = 0;
+        string name = "";
+
+        //searching for the name of this customer   
+        for (int i = 0; i < customerNum; i++) {
+            if (customerList[i].getId() == customerId) {
+                name = customerList[i].getName();
+                break;
+            }
+        }
+        //getting no of accounts
+        for (int i = 0; i < accountNum; i++) {
+            if (accountList[i].getCustomer() == customerId) {
+                accounts++;
+            }
+        }
+
+        cout << "Customer id: " << customerId << "  Customer name: " << name << "  Number of accounts: " << accounts << endl; 
+        
+        //printing all accounts for this customer
+        if (accounts > 0) {
+            cout << "Accounts of this customer:" << endl;
+            cout << "Account id" << "\t" << "Branch id" << "\t" << "Branch name" << "\t" << "Balance" << endl;
+
+            for (int i = 0; i < accountNum; i++) {
+                if (accountList[i].getCustomer() == customerId) {
+                    cout << accountList[i].getUnique() << "\t\t" << accountList[i].getBranch() << "\t\t" << 
+                    getBranchName(accountList[i].getBranch()) << "\t\t" << accountList[i].getAmount() << endl;
+                }
+            }
+        }
+    }
 }
 
 string BankingSystem::getBranchName(const int branchId) {
