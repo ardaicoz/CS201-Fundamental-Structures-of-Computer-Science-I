@@ -5,7 +5,7 @@
 #include "Customer.h"
 #include "Account.h"
 #include <iostream>
-#include <iomanip> //setw
+#include <iomanip> //setprecision
 
 std::ostream& operator<<(std::ostream& out, const Branch& obj);
 std::ostream& operator<<(std::ostream& out, const Customer& obj);
@@ -51,7 +51,6 @@ private:
     //functions
     void deleteAccountWithoutMsg(const int accountId);
     void deleteCustomerWithoutMsg(const int customerId);
-
 };
 
 #endif

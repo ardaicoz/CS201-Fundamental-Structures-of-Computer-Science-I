@@ -352,7 +352,7 @@ void BankingSystem::showAccount(const int accountId) {
         if (accountList[i].getUnique() == accountId) {
             cout << accountList[i].getUnique() << "\t\t" << accountList[i].getBranch() << "\t\t" << 
             getBranchName( accountList[i].getBranch() ) << "\t\t\t" << accountList[i].getCustomer() << "\t\t\t" <<
-            getCustomerName( accountList[i].getCustomer() ) << "\t" << (accountList[i].getAmount()) << endl;
+            getCustomerName( accountList[i].getCustomer() ) << "\t" << fixed << setprecision(2) << (accountList[i].getAmount()) << endl;
             
             break;
         }
@@ -399,7 +399,7 @@ void BankingSystem::showBranch(const int branchId) {
             for (int i = 0; i < accountNum; i++) {
                 if (accountList[i].getBranch() == branchId) {
                     cout << accountList[i].getUnique() << "\t\t" << accountList[i].getCustomer() << "\t\t" << 
-                    getCustomerName(accountList[i].getCustomer()) << "\t\t" << accountList[i].getAmount() << endl;
+                    getCustomerName(accountList[i].getCustomer()) << "\t\t" << fixed << setprecision(2) << accountList[i].getAmount() << endl;
                 }
             }
         }
@@ -446,7 +446,7 @@ void BankingSystem::showCustomer(const int customerId) {
             for (int i = 0; i < accountNum; i++) {
                 if (accountList[i].getCustomer() == customerId) {
                     cout << accountList[i].getUnique() << "\t\t" << accountList[i].getBranch() << "\t\t" << 
-                    getBranchName(accountList[i].getBranch()) << "\t\t" << accountList[i].getAmount() << endl;
+                    getBranchName(accountList[i].getBranch()) << "\t\t" << fixed << setprecision(2) << accountList[i].getAmount() << endl;
                 }
             }
         }
