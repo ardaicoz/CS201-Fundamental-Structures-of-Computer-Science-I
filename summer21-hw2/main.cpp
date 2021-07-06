@@ -120,9 +120,14 @@ int maxSubSum4(const int* array, const int size) {
 }
 
 int main() {
-    int array[1000];
-    int size = 1000;
+    //17 sized array (16 index)
+    int sizes[] = {100, 250, 500, 750, 1000, 2500, 5000, 7500, 10000, 25000, 50000, 75000, 100000, 250000, 500000, 750000, 1000000};
 
+    //creating the array for test
+    int* array = new int[ sizes[8] ];
+    const int size = sizes[8];
+
+    //random number generator to fill the array with values between -100 and 100
     srand(time(0));
 
     for (int i = 0; i < size; i++) {
@@ -130,6 +135,7 @@ int main() {
         array[i] = randNum;
     }
 
+    //printing the elements of array
     /* for (int i = 0; i < size; i++) {
         cout << array[i] << " ";
     } */
@@ -138,6 +144,7 @@ int main() {
     // Declare necessary variables
     std::chrono::time_point< std::chrono::system_clock > startTime;
     std::chrono::duration< double, milli > elapsedTime;
+    
     // Store the starting time
     startTime = std::chrono::system_clock::now();
     // Code block
@@ -165,11 +172,11 @@ int main() {
     // Store the starting time
     startTime = std::chrono::system_clock::now();
     // Code block
-    maxSubSum1(array, size);
+    maxSubSum4(array, size);
     // Compute the number of milliseconds that passed since the starting time
     elapsedTime = std::chrono::system_clock::now() - startTime;
     cout << "Algo 4: Execution took " << elapsedTime.count() << " milliseconds." << endl;
     
-    
+    delete[] array;
     return 0;
 }
