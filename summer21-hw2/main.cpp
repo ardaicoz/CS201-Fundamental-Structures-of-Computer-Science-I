@@ -120,13 +120,56 @@ int maxSubSum4(const int* array, const int size) {
 }
 
 int main() {
-    int array[] = {-2, 11, -4, 13, -5, 20};
-    int size = 6;
+    int array[1000];
+    int size = 1000;
 
-    cout << "Algo 1: " << maxSubSum1(array, size) << endl;
-    cout << "Algo 2: " << maxSubSum2(array, size) << endl;
-    cout << "Algo 3: " << maxSubSum3(array, size) << endl;
-    cout << "Algo 4: " << maxSubSum4(array, size) << endl;
+    srand(time(0));
 
+    for (int i = 0; i < size; i++) {
+        int randNum = rand() % 201 + (-100);
+        array[i] = randNum;
+    }
+
+    /* for (int i = 0; i < size; i++) {
+        cout << array[i] << " ";
+    } */
+    cout << endl;
+
+    // Declare necessary variables
+    std::chrono::time_point< std::chrono::system_clock > startTime;
+    std::chrono::duration< double, milli > elapsedTime;
+    // Store the starting time
+    startTime = std::chrono::system_clock::now();
+    // Code block
+    maxSubSum1(array, size);
+    // Compute the number of milliseconds that passed since the starting time
+    elapsedTime = std::chrono::system_clock::now() - startTime;
+    cout << "Algo 1: Execution took " << elapsedTime.count() << " milliseconds." << endl;
+
+    // Store the starting time
+    startTime = std::chrono::system_clock::now();
+    // Code block
+    maxSubSum2(array, size);
+    // Compute the number of milliseconds that passed since the starting time
+    elapsedTime = std::chrono::system_clock::now() - startTime;
+    cout << "Algo 2: Execution took " << elapsedTime.count() << " milliseconds." << endl;
+
+    // Store the starting time
+    startTime = std::chrono::system_clock::now();
+    // Code block
+    maxSubSum3(array, size);
+    // Compute the number of milliseconds that passed since the starting time
+    elapsedTime = std::chrono::system_clock::now() - startTime;
+    cout << "Algo 3: Execution took " << elapsedTime.count() << " milliseconds." << endl;
+
+    // Store the starting time
+    startTime = std::chrono::system_clock::now();
+    // Code block
+    maxSubSum1(array, size);
+    // Compute the number of milliseconds that passed since the starting time
+    elapsedTime = std::chrono::system_clock::now() - startTime;
+    cout << "Algo 4: Execution took " << elapsedTime.count() << " milliseconds." << endl;
+    
+    
     return 0;
 }
