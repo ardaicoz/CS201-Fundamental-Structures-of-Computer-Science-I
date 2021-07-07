@@ -120,63 +120,81 @@ int maxSubSum4(const int* array, const int size) {
 }
 
 int main() {
-    //17 sized array (16 index)
-    int sizes[] = {100, 250, 500, 750, 1000, 2500, 5000, 7500, 10000, 25000, 50000, 75000, 100000, 250000, 500000, 750000, 1000000};
+    //This is the array to represent different array sizes, total of 21 sizes
+    int sizes[] = {100, 250, 500, 750, 1000, 2500, 5000, 7500, 10000, 25000, 50000, 75000, 100000, 250000, 500000, 750000, 1000000, 2500000,
+    5000000, 7500000, 10000000};
 
+    //Incrementing only this variable is enough to test all input sizes
+    const int counter = 20;
+
+    //open or close these switches to run various algorithms
+    bool algo1Switch = false;
+    bool algo2Switch = false;
+    bool algo3Switch = true;
+    bool algo4Switch = true;
+      
     //creating the array for test
-    int* array = new int[ sizes[8] ];
-    const int size = sizes[8];
+    int* array = new int[ sizes[counter] ];
+    const int arraySize = sizes[counter];
 
     //random number generator to fill the array with values between -100 and 100
-    srand(time(0));
-
-    for (int i = 0; i < size; i++) {
+    srand( time(0) );
+    for (int i = 0; i < arraySize; i++) {
         int randNum = rand() % 201 + (-100);
         array[i] = randNum;
     }
 
-    //printing the elements of array
-    /* for (int i = 0; i < size; i++) {
-        cout << array[i] << " ";
-    } */
-    cout << endl;
+    cout << "Input size: " << sizes[counter] << endl;
 
     // Declare necessary variables
     std::chrono::time_point< std::chrono::system_clock > startTime;
     std::chrono::duration< double, milli > elapsedTime;
     
-    // Store the starting time
-    startTime = std::chrono::system_clock::now();
-    // Code block
-    maxSubSum1(array, size);
-    // Compute the number of milliseconds that passed since the starting time
-    elapsedTime = std::chrono::system_clock::now() - startTime;
-    cout << "Algo 1: Execution took " << elapsedTime.count() << " milliseconds." << endl;
+    //Algorithm 1
+    if (algo1Switch) {
+        // Store the starting time
+        startTime = std::chrono::system_clock::now();
+        // Code block
+        maxSubSum1(array, arraySize);
+        // Compute the number of milliseconds that passed since the starting time
+        elapsedTime = std::chrono::system_clock::now() - startTime;
+        cout << "Algo 1: Execution took " << elapsedTime.count() << " milliseconds." << endl;
+    }
 
-    // Store the starting time
-    startTime = std::chrono::system_clock::now();
-    // Code block
-    maxSubSum2(array, size);
-    // Compute the number of milliseconds that passed since the starting time
-    elapsedTime = std::chrono::system_clock::now() - startTime;
-    cout << "Algo 2: Execution took " << elapsedTime.count() << " milliseconds." << endl;
+    //Algorithm 2
+    if (algo2Switch) {
+        // Store the starting time
+        startTime = std::chrono::system_clock::now();
+        // Code block
+        maxSubSum2(array, arraySize);
+        // Compute the number of milliseconds that passed since the starting time
+        elapsedTime = std::chrono::system_clock::now() - startTime;
+        cout << "Algo 2: Execution took " << elapsedTime.count() << " milliseconds." << endl;
+    }
 
-    // Store the starting time
-    startTime = std::chrono::system_clock::now();
-    // Code block
-    maxSubSum3(array, size);
-    // Compute the number of milliseconds that passed since the starting time
-    elapsedTime = std::chrono::system_clock::now() - startTime;
-    cout << "Algo 3: Execution took " << elapsedTime.count() << " milliseconds." << endl;
+    //Algorithm 3
+    if (algo3Switch) {
+        // Store the starting time
+        startTime = std::chrono::system_clock::now();
+        // Code block
+        maxSubSum3(array, arraySize);
+        // Compute the number of milliseconds that passed since the starting time
+        elapsedTime = std::chrono::system_clock::now() - startTime;
+        cout << "Algo 3: Execution took " << elapsedTime.count() << " milliseconds." << endl;
+    }
 
-    // Store the starting time
-    startTime = std::chrono::system_clock::now();
-    // Code block
-    maxSubSum4(array, size);
-    // Compute the number of milliseconds that passed since the starting time
-    elapsedTime = std::chrono::system_clock::now() - startTime;
-    cout << "Algo 4: Execution took " << elapsedTime.count() << " milliseconds." << endl;
+    //Algorithm 4
+    if (algo4Switch) {
+        // Store the starting time
+        startTime = std::chrono::system_clock::now();
+        // Code block
+        maxSubSum4(array, arraySize);
+        // Compute the number of milliseconds that passed since the starting time
+        elapsedTime = std::chrono::system_clock::now() - startTime;
+        cout << "Algo 4: Execution took " << elapsedTime.count() << " milliseconds." << endl;
+    }
     
     delete[] array;
+    array = NULL;
     return 0;
 }
