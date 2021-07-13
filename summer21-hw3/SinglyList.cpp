@@ -6,8 +6,10 @@ SinglyList::SinglyList() {
     head = NULL;
 }
 
+SinglyList::SinglyList(const SinglyList& aSinglyList) {}
+
 SinglyList::~SinglyList() {
-    while (!isEmpty)
+    while ( !isEmpty() )
         remove(1);
 }
 
@@ -30,3 +32,94 @@ SinglyList::SinglyListNode* SinglyList::find(const int index) const {
         return cur;
     }
 }
+
+void SinglyList::retrieve(const int index, ListItemType& dataItem) const {
+    if ( index >= 1 && index <= getLength() ) {
+        SinglyListNode* cur = find(index);
+        dataItem = cur->item;
+    }
+}
+
+void SinglyList::insert(const int index, ListItemType newItem) {
+    int newLength = getLength() + 1;
+
+    if (index >= 1 && index <= newLength) {
+        SinglyListNode* newPtr = new SinglyListNode;
+        size = newLength;
+        newPtr->item = newItem;
+
+        if (index == 1) {
+            newPtr->next = head;
+            head = newPtr;
+        }
+        else {
+            SinglyListNode* prev = find(index-1);
+            newPtr->next = prev->next;
+            prev->next = newPtr;
+        }
+    }
+}
+
+void SinglyList::remove(const int index) {
+    SinglyListNode* cur;
+
+    if (index >= 1 && index <= getLength()) {
+        --size;
+
+        if (index == 1) {
+            cur = head;
+            head = head->next;
+        }
+        else {
+            SinglyListNode* prev = find(index-1);
+            cur = prev->next;
+            prev->next = cur->next;
+        }
+        
+        cur->next = NULL;
+        delete cur;
+        cur = NULL;
+    }
+}
+
+void SinglyList::display() const {
+    if (size == 0) {
+        cout << "SinglyList is empty" << endl;
+    }
+    else {
+        cout << "[";
+        for (SinglyListNode* temp = head; temp != NULL; temp = temp->next) {
+            cout << (temp->item).getId() << ", " << (temp->item).getTitle() << " - ";
+        }
+        cout << "]" << endl;
+    }
+}
+
+bool SinglyList::isExists(const ListItemType item) const {
+    bool found = false;
+    int id = item.getId();
+    
+    for (SinglyListNode* temp = head; temp != NULL; temp = temp->next) {
+        if ((temp->item).getId() == id) {
+            found = true;
+            return found;
+        }
+    }
+
+    return found;
+}
+
+int SinglyList::findIndex(const ListItemType item) const {
+    int id = item.getId();
+    int index = 1;
+
+    for (SinglyListNode* temp = head; temp != NULL; temp = temp->next) {
+        if ((temp->item).getId() == id) {
+            return index;
+        }
+        index++;
+    }
+
+    return -1;
+}
+

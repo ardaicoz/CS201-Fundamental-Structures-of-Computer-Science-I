@@ -6,6 +6,11 @@ Course::Course(const int id, const string title) {
     this->title = title;
 }
 
+Course::Course(const Course& copyCourse) {
+    id = copyCourse.getId();
+    title = copyCourse.getTitle();
+}
+
 int Course::getId() const {
     return id;
 }

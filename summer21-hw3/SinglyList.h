@@ -13,9 +13,15 @@ public:
 
     bool isEmpty() const;
     int getLength() const;
-    bool retrieve(const int index, ListItemType& dataItem) const;
-    bool insert(const int index, ListItemType newItem);
-    bool remove(const int index);
+    void retrieve(const int index, ListItemType& dataItem) const;
+    
+    void insert(const int index, ListItemType newItem);
+    void remove(const int index);
+
+    //additional functions
+    bool isExists(const ListItemType item) const;
+    void display() const;
+    int findIndex(const ListItemType item) const;
 
 private:
     struct SinglyListNode {
