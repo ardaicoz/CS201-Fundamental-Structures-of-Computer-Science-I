@@ -34,10 +34,11 @@ void Student::studentAddCourse(const Course newCourse) {
     int index = courseList.getLength() + 1;
 
     if (courseList.isExists(newCourse)) {
-        cout << "Course already exists" << endl;
+        cout << "Student " << id << " is already enrolled in course " << newCourse.getId() << endl;
     }
     else {
         courseList.insert(index, newCourse);
+        cout << "Course " << newCourse.getId() << " has been added to student " << id << endl;
     }
 }
 
@@ -46,6 +47,10 @@ void Student::studentDeleteCourse(const Course course) {
 
     if (index != -1) {
         courseList.remove(index);
+        cout << "Student " << id << " has been withdrawn from course " << course.getId() << endl;
+    }
+    else {
+        cout << "Student " << id << " is not enrolled in course " << course.getId() << endl;
     }
 }
 
