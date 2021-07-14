@@ -97,6 +97,11 @@ void DoublyList::insert(const int index, ListItemType2 newItem) {
             prevNode->next = newPtr;
             //new node's prev pointer will now point to node that was previously in this index 
             newPtr->prev = prevNode;
+
+            //if addition happens between two nodes (if index equals to newLength, addition happens in the very end), 
+            //set the front node's prev pointer to new node
+            if (index != newLength)
+                newPtr->next->prev = newPtr;
         }
     }
 }
