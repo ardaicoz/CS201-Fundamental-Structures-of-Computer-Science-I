@@ -3,7 +3,7 @@
 #include <iostream>
 #include "Course.h"
 
-typedef Course ListItemType;
+typedef Course ListItemType1;
 
 class SinglyList {
 public:
@@ -13,19 +13,19 @@ public:
 
     bool isEmpty() const;
     int getLength() const;
-    void retrieve(const int index, ListItemType& dataItem) const;
+    void retrieve(const int index, ListItemType1& dataItem) const;
     
-    void insert(const int index, ListItemType newItem);
+    void insert(const int index, ListItemType1 newItem);
     void remove(const int index);
 
     //additional functions
-    bool isExists(const ListItemType item) const;
+    bool isExists(const ListItemType1 item) const;
     void display() const;
-    int findIndex(const ListItemType item) const;
+    int findIndex(const ListItemType1 item) const;
 
 private:
     struct SinglyListNode {
-        ListItemType item;
+        ListItemType1 item;
         SinglyListNode* next;
     };
     

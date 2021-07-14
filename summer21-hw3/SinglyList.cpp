@@ -6,7 +6,26 @@ SinglyList::SinglyList() {
     head = NULL;
 }
 
-SinglyList::SinglyList(const SinglyList& aSinglyList) {}
+SinglyList::SinglyList(const SinglyList& aSinglyList) {
+    size = aSinglyList.size;
+
+    if (aSinglyList.head == NULL)
+        head == NULL; //original list is empty
+    else {
+        //copy first node
+        head = new SinglyListNode;
+        head->item = aSinglyList.head->item;
+        //copy rest of list
+        SinglyListNode* newPtr = head; //new list ptr
+
+        for (SinglyListNode* origPtr = aSinglyList.head->next; origPtr != NULL; origPtr = origPtr->next) {
+            newPtr->next = new SinglyListNode;
+            newPtr = newPtr->next;
+            newPtr->item = origPtr->item;
+        }
+        newPtr->next = NULL;
+    }
+}
 
 SinglyList::~SinglyList() {
     while ( !isEmpty() )
@@ -33,14 +52,14 @@ SinglyList::SinglyListNode* SinglyList::find(const int index) const {
     }
 }
 
-void SinglyList::retrieve(const int index, ListItemType& dataItem) const {
+void SinglyList::retrieve(const int index, ListItemType1& dataItem) const {
     if ( index >= 1 && index <= getLength() ) {
         SinglyListNode* cur = find(index);
         dataItem = cur->item;
     }
 }
 
-void SinglyList::insert(const int index, ListItemType newItem) {
+void SinglyList::insert(const int index, ListItemType1 newItem) {
     int newLength = getLength() + 1;
 
     if (index >= 1 && index <= newLength) {
@@ -95,7 +114,7 @@ void SinglyList::display() const {
     }
 }
 
-bool SinglyList::isExists(const ListItemType item) const {
+bool SinglyList::isExists(const ListItemType1 item) const {
     bool found = false;
     int id = item.getId();
     
@@ -109,7 +128,7 @@ bool SinglyList::isExists(const ListItemType item) const {
     return found;
 }
 
-int SinglyList::findIndex(const ListItemType item) const {
+int SinglyList::findIndex(const ListItemType1 item) const {
     int id = item.getId();
     int index = 1;
 
