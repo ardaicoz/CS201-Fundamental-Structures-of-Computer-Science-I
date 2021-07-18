@@ -8,6 +8,7 @@ class Student {
 public:
     Student(const int id = 0, const std::string firstName = "", const std::string lastName = "");
     ~Student();
+    Student& operator=(const Student&);
 
     int getId() const;
     std::string getFirstName() const;
@@ -21,7 +22,6 @@ public:
 
     //Singly linked list function
     bool isExists(const int courseId) const;
-	bool isExists(const Course course) const;
     bool isExists(const int courseId, std::string& courseName);
 
 private:
@@ -39,14 +39,13 @@ private:
 	CourseNode* head;
 	
 	//Singly linked list functions
-	int getLength() const;
+    int getLength() const;
     bool isEmpty() const;
     
     void insert(const int index, Course newItem);
     void remove(const int index);
 
     CourseNode* find(const int index) const;
-    int findIndex(const Course item) const;
     int findIndex(const int courseId) const;
     
 };

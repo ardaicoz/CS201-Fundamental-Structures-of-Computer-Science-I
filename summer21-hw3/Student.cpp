@@ -1,13 +1,38 @@
 #include "Student.h"
 using namespace std;
 
-Student::Student(const int id, const string firstName, const string lastName) {
+Student::Student(const int id, const string firstName, const string lastName) : size(0), head(NULL) {
     this->id = id;
     this->firstName = firstName;
-    this->lastName = lastName;
-	
-	size = 0;
-	head = NULL;
+    this->lastName = lastName;	
+}
+
+Student& Student::operator=(const Student& right) {
+    if ( &right != this ) {
+        //copy data members
+        id = right.id;
+        firstName = right.firstName;
+        lastName = right.lastName;
+
+        //delete existing linked list, if any
+        while ( !isEmpty() )
+            remove(1);
+        head = NULL;
+        size = 0;
+        
+        //copy the linked list
+        if (right.size > 0) {
+            size = right.size;
+
+            int index = 1;
+            for (CourseNode* cur = right.head; cur != NULL; cur = cur->next) {
+                insert(index, Course(cur->item.getId(), cur->item.getTitle()) );
+                index++;
+            }
+        }
+    }
+
+    return *this;
 }
 
 Student::~Student() {
@@ -31,7 +56,7 @@ string Student::getLastName() const {
 void Student::studentAddCourse(const Course newCourse) {
     int index = getLength() + 1;
 
-    if (!isExists(newCourse)) {
+    if (!isExists(newCourse.getId())) {
         insert(index, newCourse);
     }
 }
@@ -70,20 +95,6 @@ bool Student::isEmpty() const {
 
 bool Student::isExists(const int courseId) const {
     bool found = false;
-    
-    for (CourseNode* temp = head; temp != NULL; temp = temp->next) {
-        if ((temp->item).getId() == courseId) {
-            found = true;
-            return found;
-        }
-    }
-
-    return found;
-}
-
-bool Student::isExists(const Course course) const {
-    bool found = false;
-    int courseId = course.getId();
     
     for (CourseNode* temp = head; temp != NULL; temp = temp->next) {
         if ((temp->item).getId() == courseId) {
@@ -162,20 +173,6 @@ Student::CourseNode* Student::find(const int index) const {
             cur = cur->next;
         return cur;
     }
-}
-
-int Student::findIndex(const Course item) const {
-    int id = item.getId();
-    int index = 1;
-
-    for (CourseNode* temp = head; temp != NULL; temp = temp->next) {
-        if ((temp->item).getId() == id) {
-            return index;
-        }
-        index++;
-    }
-
-    return -1;
 }
 
 int Student::findIndex(const int courseId) const {

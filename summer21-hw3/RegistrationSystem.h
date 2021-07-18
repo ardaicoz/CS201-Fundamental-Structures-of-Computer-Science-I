@@ -20,7 +20,8 @@ public :
     void showCourse(const int courseId);
     void showAllStudents();
 
-    void showList() const;
+    //additional functions
+    void showStudentWithoutMsg(const int studentId);
     
 private:
     //Declaring doubly linked list
@@ -37,7 +38,6 @@ private:
     int getLength() const;
 
     bool isExists(const int studentId) const;
-	bool isExists(const Student student) const;
     
     void insert(const int index, Student newItem);
     void remove(const int index);

@@ -87,7 +87,11 @@ void RegistrationSystem::showStudent(const int studentId) {
         cout << "Student " << studentId << " does not exist" << endl;
     else {
         cout << "Student id\t" << "First name\t" << "Last name\t" << endl;
+        showStudentWithoutMsg(studentId);
+    }
+}
 
+void RegistrationSystem::showStudentWithoutMsg(const int studentId) {
         //student information
         int index = findIndex(studentId);
         StudentNode* student = find(index);
@@ -95,7 +99,6 @@ void RegistrationSystem::showStudent(const int studentId) {
         cout << student->item.getId() << setw(18) << setfill(' ') << student->item.getFirstName() << setw(12) << setfill(' ') << student->item.getLastName() << endl;
         //course information
         student->item.showCourses();
-    }
 }
 
 void RegistrationSystem::showCourse(const int courseId) {
@@ -125,16 +128,14 @@ void RegistrationSystem::showCourse(const int courseId) {
     }
 }
 
-void RegistrationSystem::showList() const {
-    if (size == 0) {
-        cout << "SinglyList is empty" << endl;
-    }
+void RegistrationSystem::showAllStudents() {
+    if (size == 0)
+        cout << "There are no students in the system" << endl;
     else {
-        cout << "Students: [";
-        for (StudentNode* temp = head; temp != NULL; temp = temp->next) {
-            cout << (temp->item).getId() << " " << (temp->item).getFirstName() << (temp->item).getLastName() <<  " - ";
+        cout << "Student id\t" << "First name\t" << "Last name\t" << endl;
+        for (StudentNode* cur = head; cur != NULL; cur = cur->next) {
+            showStudentWithoutMsg(cur->item.getId());
         }
-        cout << "]" << endl;
     }
 }
 
@@ -151,24 +152,8 @@ bool RegistrationSystem::isExists(const int studentId) const {
     bool found = false;
     
     for (StudentNode* temp = head; temp != NULL; temp = temp->next) {
-        if ((temp->item).getId() == studentId) {
+        if ((temp->item).getId() == studentId)
             found = true;
-            return found;
-        }
-    }
-
-    return found;
-}
-
-bool RegistrationSystem::isExists(const Student student) const {
-    bool found = false;
-    int studentId = student.getId();
-    
-    for (StudentNode* temp = head; temp != NULL; temp = temp->next) {
-        if ((temp->item).getId() == studentId) {
-            found = true;
-            return found;
-        }
     }
 
     return found;
@@ -193,7 +178,7 @@ void RegistrationSystem::insert(const int index, Student newItem) {
             head = newPtr;
         }
         else {
-            //get the address of node at the back
+            //get the address of node at the back"
             StudentNode* prevNode = find(index-1);
             //new node's next pointer will now point to node that was previously in front of prev node
             newPtr->next = prevNode->next;
@@ -211,38 +196,60 @@ void RegistrationSystem::insert(const int index, Student newItem) {
 }
 
 void RegistrationSystem::remove(const int index) {
-    StudentNode* cur;
-
     if (index >= 1 && index <= getLength()) {
-        --size;
+        StudentNode* cur;
 
+        //delete at index 1
         if (index == 1) {
-            //temp pointer of cur now points to the first node (which is also pointed by "head")
-            cur = head;
-            //head pointer skips this node and points to the next node (this skipped node will be deleted)
-            //cur pointer still points to the lonely node
-            head = head->next;
-            //disconnecting the next node from skipped node
-            head->prev = NULL;
+            //deleting the only node
+            if (size == 1) {
+                //find the address of this lonely node
+                cur = find(index);  
+                //set the head to NULL (because there are no nodes other than cur)
+                head = cur->next;
+                //node is disconnected, delete it
+                delete cur;
+                cur = NULL;
+            }
+            //if there are other nodes
+            else {
+                //find the address of this node that is going to be deleted
+                cur = find(index);
+                //set the head to the next node
+                head = cur->next;
+                //set the next node's prev pointer to NULL
+                head->prev = NULL;
+                //delete this node
+                delete cur;
+                cur = NULL;
+            }
         }
+        //if the deletion is not in the first index, there is again two possibilities
         else {
-            //get the address of the node at the back
-            StudentNode* prev = find(index-1);
-            //cur pointer now points to the node that is in front of prev node
-            cur = prev->next;
-            //prev node's next pointer skips the node in front of it and point to the next node
-            prev->next = cur->next;
-            //connecting the next node to prev node
-            cur->next->prev = prev;
+            //if we are deleting the very last node
+            if (index == getLength()) {
+                //get the address of this node
+                cur = find(index);
+                //go back one node and set the next pointer of this node to NULL 
+                (cur->prev)->next = NULL;
+                //delete the node
+                delete cur;
+                cur = NULL;
+            }
+            else {
+                //get the address of this node
+                cur = find(index);
+                //go back one node and set the next pointer of this node to the node at the front
+                (cur->prev)->next = cur->next;
+                //go front one node and set the prev pointer of this node to the node at the back
+                (cur->next)->prev = cur->prev;
+                //delete current node
+                delete cur;
+                cur = NULL;
+            }
         }
-        
-        //in every case, cur pointer points to the node to be deleted 
-        //disconnecting this node from actual list
-        cur->next = NULL;
-        cur->prev = NULL;
-        //deleting the node
-        delete cur;
-        cur = NULL;
+
+        size--;
     }
 }
 
