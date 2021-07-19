@@ -64,7 +64,7 @@ void RegistrationSystem::withdrawCourse(const int studentId, const int courseId)
         int index = findIndex(studentId);
         StudentNode* student = find(index);
 
-        if (student->item.isExists(courseId))
+        if (!student->item.isExists(courseId))
             cout << "Student " << studentId << " is not enrolled in course " << courseId << endl;
         else {
             student->item.studentDeleteCourse(courseId);
@@ -74,12 +74,19 @@ void RegistrationSystem::withdrawCourse(const int studentId, const int courseId)
 }
 
 void RegistrationSystem::cancelCourse(const int courseId) {
+    bool found = false;
+    
     for (StudentNode* cur = head; cur != NULL; cur = cur->next) {
         if (cur->item.isExists(courseId)) {
+            found = true;
             cur->item.studentDeleteCourse(courseId);
         }
     }
-    cout << "Course " << courseId << " has been cancelled" << endl; 
+    
+    if (!found)
+        cout << "Course " << courseId << " does not exist" << endl; 
+    else
+        cout << "Course " << courseId << " has been cancelled" << endl; 
 }
 
 void RegistrationSystem::showStudent(const int studentId) {
@@ -116,7 +123,7 @@ void RegistrationSystem::showCourse(const int courseId) {
         cout << "Course " << courseId << " does not exist" << endl;
     else {
         cout << "Course id\t" << "Course name" << endl;
-        cout << courseId << setw(19) << setfill(' ') << courseName << endl;
+        cout << courseId << setw(20) << setfill(' ') << courseName << endl;
         cout << "\tStudent id" << "\tFirst name" << "\tLast name" << endl;
 
         //print students
@@ -190,11 +197,16 @@ void RegistrationSystem::insert(const int index, Student newItem) {
             //if addition happens between two nodes (if index equals to newLength, addition happens in the very end), 
             //set the front node's prev pointer to new node
             if (index != newLength)
-                newPtr->next->prev = newPtr;
+                (newPtr->next)->prev = newPtr;
         }
     }
 }
 
+// total of three different possibilites (first one also has two subpossibilites)
+// 1) If index is 1, the size of list can be 1 or bigger. Each possibility requires different approach
+// 2) If index is the last node
+// 3) If index is between some nodes
+// but in the end, current node requires deletion and size has to be decremented
 void RegistrationSystem::remove(const int index) {
     if (index >= 1 && index <= getLength()) {
         StudentNode* cur;
@@ -207,9 +219,6 @@ void RegistrationSystem::remove(const int index) {
                 cur = find(index);  
                 //set the head to NULL (because there are no nodes other than cur)
                 head = cur->next;
-                //node is disconnected, delete it
-                delete cur;
-                cur = NULL;
             }
             //if there are other nodes
             else {
@@ -219,9 +228,6 @@ void RegistrationSystem::remove(const int index) {
                 head = cur->next;
                 //set the next node's prev pointer to NULL
                 head->prev = NULL;
-                //delete this node
-                delete cur;
-                cur = NULL;
             }
         }
         //if the deletion is not in the first index, there is again two possibilities
@@ -232,9 +238,6 @@ void RegistrationSystem::remove(const int index) {
                 cur = find(index);
                 //go back one node and set the next pointer of this node to NULL 
                 (cur->prev)->next = NULL;
-                //delete the node
-                delete cur;
-                cur = NULL;
             }
             else {
                 //get the address of this node
@@ -243,12 +246,13 @@ void RegistrationSystem::remove(const int index) {
                 (cur->prev)->next = cur->next;
                 //go front one node and set the prev pointer of this node to the node at the back
                 (cur->next)->prev = cur->prev;
-                //delete current node
-                delete cur;
-                cur = NULL;
             }
         }
 
+        //delete current node
+        delete cur;
+        cur = NULL;
+        //decrement the size
         size--;
     }
 }
