@@ -44,31 +44,37 @@ string infix2postfix(const string exp ) {
 
 double evaluatePostfix(const string exp) {
     Stack aStack;
+    const int ASCII = 48;
 
-    for (int i = 0; i <= exp.length(); i++) {
+    for (int i = 0; i < exp.length(); i++) {
         //if this char is an operand
         if ( isExistsDigit(exp[i]) ) {
-            aStack.push(exp[i]);
+            aStack.push(exp[i] - ASCII);
         }
         else {
-            char operand2 = aStack.getTop();
+            double operand2 = aStack.getTop();
+            cout << "operand2: " << operand2 << endl;
             aStack.pop();
-            char operand1 = aStack.getTop();
+            double operand1 = aStack.getTop();
+            cout << "operand1: " << operand1 << endl;
             aStack.pop();
 
-            double result;
-            if (exp[i] == '*')
-                result = (operand1 -'0') * (operand2 -'0');
-            else if (exp[i] == '/')
-                result = (operand1 -'0') / (operand2 -'0');
-            else if (exp[i] == '+')
-                result = (operand1 -'0') + (operand2 -'0');
-            if (exp[i] == '-')
-                result = (operand1 -'0') - (operand2 -'0');
+            double num = 0;
+            if (exp[i] == '*') {
+                num = operand1 * operand2;
+            }
+            else if (exp[i] == '/') {
+                num = static_cast<double>(operand1) / operand2;
+            }
+            else if (exp[i] == '+')  {
+                num = operand1 + operand2;
+            }
+            if (exp[i] == '-') {
+                num = operand1 - operand2;
+            }
             
-            cout << "result: " << result << endl;
-            //convert the result to char and push
-            aStack.push( static_cast<char>(result) );
+            cout << "num: " << num << endl;
+            aStack.push(num);
         }
 
         cout << "stack: ";

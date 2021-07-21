@@ -2,7 +2,7 @@
 #define __STACK_H
 #include <iostream>
 
-typedef int StackItemType;
+typedef double StackItemType;
 
 class Stack {
 public:
